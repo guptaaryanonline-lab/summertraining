@@ -387,26 +387,11 @@ export function RegisterDialog({ open, onOpenChange, program }) {
     e.preventDefault()
     if (!program) { toast.error('Please pick a program first'); return }
     setSubmitting(true)
-    try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...form,
-          programId: program.id,
-          programTitle: program.title,
-          category: program.category,
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Registration failed')
-      setDone(true)
-      toast.success('Registered! We\u2019ll email you next steps.')
-    } catch (err) {
-      toast.error(err.message)
-    } finally {
-      setSubmitting(false)
-    }
+    // Pure frontend — simulate a brief submit delay for UX, no backend call
+    await new Promise((r) => setTimeout(r, 600))
+    setSubmitting(false)
+    setDone(true)
+    toast.success('Registered! We\u2019ll email you next steps.')
   }
 
   return (
